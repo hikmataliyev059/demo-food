@@ -8,6 +8,8 @@
 
     <ItemGroup>
         <PackageReference Include="AutoMapper" Version="13.0.1" />
+        <PackageReference Include="Google.Cloud.Dialogflow.V2" Version="4.25.0" />
+        <PackageReference Include="Hangfire.Dashboard.Basic.Authentication" Version="7.0.1" />
         <PackageReference Include="MailKit" Version="4.10.0" />
         <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.11" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.11"/>
@@ -18,9 +20,10 @@
         <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="7.1.2" />
         <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.7" />
         <PackageReference Include="MimeKit" Version="4.10.0" />
-        <PackageReference Include="OpenAiNg" Version="2.3.3" />
+        <PackageReference Include="OpenAI.API" Version="1.0.0" />
         <PackageReference Include="Stripe.net" Version="47.3.0" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2"/>
+        <PackageReference Include="System.Data.SqlClient" Version="4.9.0" />
         <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.1.2" />
     </ItemGroup>
 
@@ -29,11 +32,11 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="wwwroot\" />
-    </ItemGroup>
-
-    <ItemGroup>
       <_ContentIncludedByDefault Remove="wwwroot\Categor\d5dcc3fc-4b90-43de-81fd-ec49ff195102.jpg" />
+      <_ContentIncludedByDefault Remove="wwwroot\example\35685539-8b1b-43b5-9c04-d2e347de4c60.jpg" />
+      <_ContentIncludedByDefault Remove="wwwroot\Products\5cff58fd-2ca0-4f27-98c3-64ad62042ff6.jpg" />
+      <_ContentIncludedByDefault Remove="wwwroot\rtr\dfea2e5d-b9d9-4d98-a960-2469d2f141a7.png" />
+      <_ContentIncludedByDefault Remove="wwwroot\category\f4694b01-8555-4cd1-8f76-ac22250d755b.jpg" />
     </ItemGroup>
 
 </Project>

@@ -8,9 +8,7 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
 {
     public void Configure(EntityTypeBuilder<Product> builder)
     {
-        builder.Property(p => p.Name)
-            .IsRequired()
-            .HasMaxLength(200);
+        builder.Property(p => p.Name).IsRequired().HasMaxLength(200);
 
         builder.Property(c => c.Slug)
             .IsRequired()
@@ -45,9 +43,5 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
         builder.HasMany(p => p.ProductImages)
             .WithOne(pi => pi.Product)
             .HasForeignKey(pi => pi.ProductId);
-
-        // builder.HasMany(p => p.ProductWishlists)
-        //     .WithOne(pw => pw.Product)
-        //     .HasForeignKey(pw => pw.ProductId);
     }
 }

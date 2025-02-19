@@ -8,14 +8,9 @@ public class TagConfiguration : IEntityTypeConfiguration<Tag>
 {
     public void Configure(EntityTypeBuilder<Tag> builder)
     {
-        builder.Property(t => t.Name)
-            .IsRequired()
-            .HasMaxLength(50);
+        builder.Property(t => t.Name).IsRequired().HasMaxLength(50);
 
-        builder.Property(c => c.Slug)
-            .IsRequired()
-            .HasMaxLength(100)
-            .IsUnicode(false);
+        builder.Property(c => c.Slug).IsRequired().HasMaxLength(100).IsUnicode(false);
 
         builder.HasKey(t => t.Id);
 

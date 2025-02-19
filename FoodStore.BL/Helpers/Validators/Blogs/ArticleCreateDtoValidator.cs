@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using FoodStore.BL.Helpers.Constants;
 using FoodStore.BL.Helpers.DTOs.Blogs;
+using FoodStore.BL.Helpers.Validators.Common;
 
 namespace FoodStore.BL.Helpers.Validators.Blogs;
 
@@ -18,5 +19,7 @@ public class ArticleCreateDtoValidator : AbstractValidator<ArticleCreateDto>
         RuleFor(a => a.TagIds).NotEmpty().NotNull().WithMessage(ValidationMessages.Required);
 
         RuleFor(a => a.AuthorId).NotEmpty().NotNull().WithMessage(ValidationMessages.Required);
+
+        RuleFor(a => a.Image).SetValidator(new ImageValidator());
     }
 }

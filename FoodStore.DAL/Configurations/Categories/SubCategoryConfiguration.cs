@@ -10,9 +10,7 @@ public class SubCategoryConfiguration : IEntityTypeConfiguration<SubCategory>
     {
         builder.ToTable("SubCategories");
 
-        builder.Property(c => c.Name)
-            .IsRequired()
-            .HasMaxLength(100);
+        builder.Property(c => c.Name).IsRequired().HasMaxLength(100);
 
         builder.Property(c => c.Slug)
             .IsRequired()

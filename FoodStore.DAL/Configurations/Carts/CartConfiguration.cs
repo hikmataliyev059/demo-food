@@ -10,9 +10,7 @@ public class CartConfiguration : IEntityTypeConfiguration<CartItem>
     {
         builder.ToTable("Cart");
 
-        builder.Property(c => c.Quantity)
-            .IsRequired()
-            .HasDefaultValue(1);
+        builder.Property(c => c.Quantity).IsRequired().HasDefaultValue(1);
 
         builder.HasOne(c => c.Product)
             .WithMany(p => p.CartItems)

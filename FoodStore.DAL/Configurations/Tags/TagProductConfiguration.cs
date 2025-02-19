@@ -1,5 +1,4 @@
-﻿using FoodStore.Core.Entities;
-using FoodStore.Core.Entities.Products;
+﻿using FoodStore.Core.Entities.Products;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

@@ -10,9 +10,7 @@ public class ContactConfiguration : IEntityTypeConfiguration<Contact>
     {
         builder.ToTable("Contacts");
 
-        builder.Property(c => c.FullName)
-            .IsRequired()
-            .HasMaxLength(100);
+        builder.Property(c => c.FullName).IsRequired().HasMaxLength(100);
 
         builder.Property(c => c.Email)
             .IsRequired()

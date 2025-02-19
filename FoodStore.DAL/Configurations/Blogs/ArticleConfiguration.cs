@@ -20,8 +20,6 @@ public class ArticleConfiguration : IEntityTypeConfiguration<Article>
 
         builder.Property(a => a.PublishDate).IsRequired();
 
-        builder.HasOne(a => a.Category)
-            .WithMany()
-            .HasForeignKey(a => a.CategoryId);
+        builder.HasOne(a => a.Category).WithMany().HasForeignKey(a => a.CategoryId);
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace FoodStore.BL.Helpers.DTOs.Product;
+﻿using Microsoft.AspNetCore.Http;
+
+namespace FoodStore.BL.Helpers.DTOs.Product;
 
 public record ProductUpdateDto
 {
@@ -11,6 +13,6 @@ public record ProductUpdateDto
     public int? CategoryId { get; set; }
     public int? SubCategoryId { get; set; }
     public List<int> TagIds { get; set; }
-    public string PrimaryImageUrl { get; set; } = string.Empty;
-    public List<string> SubImageUrls { get; set; } = new List<string>();
+    public IFormFile PrimaryImage { get; set; }
+    public ICollection<IFormFile> Images { get; set; } = new List<IFormFile>();
 }

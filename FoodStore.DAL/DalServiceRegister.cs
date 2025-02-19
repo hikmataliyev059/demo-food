@@ -1,6 +1,21 @@
-﻿using FoodStore.Core.Repositories.Interfaces;
+﻿using FoodStore.Core.Repositories.Interfaces.Blogs;
+using FoodStore.Core.Repositories.Interfaces.Cart;
+using FoodStore.Core.Repositories.Interfaces.Categories;
+using FoodStore.Core.Repositories.Interfaces.Contacts;
+using FoodStore.Core.Repositories.Interfaces.Coupons;
+using FoodStore.Core.Repositories.Interfaces.Products;
+using FoodStore.Core.Repositories.Interfaces.Reviews;
+using FoodStore.Core.Repositories.Interfaces.Wishlists;
 using FoodStore.DAL.Context;
-using FoodStore.DAL.Repositories.Implements;
+using FoodStore.DAL.Repositories.Implements.Blogs;
+using FoodStore.DAL.Repositories.Implements.Cart;
+using FoodStore.DAL.Repositories.Implements.Categories;
+using FoodStore.DAL.Repositories.Implements.Contacts;
+using FoodStore.DAL.Repositories.Implements.Coupons;
+using FoodStore.DAL.Repositories.Implements.Products;
+using FoodStore.DAL.Repositories.Implements.Reviews;
+using FoodStore.DAL.Repositories.Implements.Wishlists;
+using Hangfire;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,6 +30,9 @@ public static class DalServiceRegister
         {
             opt.UseSqlServer(configuration.GetConnectionString("Deploy"));
         });
+
+        services.AddHangfire(x => x.UseSqlServerStorage(configuration.GetConnectionString("Deploy")));
+        services.AddHangfireServer();
     }
 
     public static void AddRepositories(this IServiceCollection services)
@@ -23,8 +41,6 @@ public static class DalServiceRegister
         services.AddScoped<ISubCategoryRepository, SubCategoryRepository>();
         services.AddScoped<IProductRepository, ProductRepository>();
         services.AddScoped<ITagRepository, TagRepository>();
-        services.AddScoped<IOrderRepository, OrderRepository>();
-        services.AddScoped<IPaymentRepository, PaymentRepository>();
         services.AddScoped<IReviewRepository, ReviewRepository>();
         services.AddScoped<ICouponRepository, CouponRepository>();
         services.AddScoped<IContactRepository, ContactRepository>();

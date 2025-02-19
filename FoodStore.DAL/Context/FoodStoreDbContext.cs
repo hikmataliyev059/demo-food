@@ -4,11 +4,10 @@ using FoodStore.Core.Entities.Cart;
 using FoodStore.Core.Entities.Categories;
 using FoodStore.Core.Entities.Contacts;
 using FoodStore.Core.Entities.Coupons;
-using FoodStore.Core.Entities.Payments;
 using FoodStore.Core.Entities.Products;
 using FoodStore.Core.Entities.Reviews;
 using FoodStore.Core.Entities.User;
-using FoodStore.Core.Entities.Wishlists;
+using FoodStore.Core.Entities.Wish;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -32,10 +31,6 @@ public class FoodStoreDbContext : IdentityDbContext<AppUser>
 
     public DbSet<SubCategory> SubCategories { get; set; }
 
-    public DbSet<Order> Orders { get; set; }
-
-    public DbSet<Payment> Payments { get; set; }
-    
     public DbSet<CartItem> CartItems { get; set; }
 
     public DbSet<Review> Reviews { get; set; }

@@ -1,6 +1,6 @@
 ﻿namespace FoodStore.BL.Helpers.DTOs.Category;
 
-public class CategoryWithSubcategoriesDto
+public record CategoryWithSubcategoriesDto
 {
     public string CategoryId { get; set; }
     public string CategoryName { get; set; }

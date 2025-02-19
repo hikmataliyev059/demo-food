@@ -10,17 +10,14 @@ public class ReviewConfiguration : IEntityTypeConfiguration<Review>
     {
         builder.ToTable("Reviews");
 
+        builder.Property(r => r.Rating).IsRequired();
+
+        builder.Property(r => r.Comment).HasMaxLength(1000).IsRequired(false);
+
         builder.HasKey(x => x.Id);
 
         builder.HasOne(r => r.Product)
             .WithMany(p => p.Reviews)
             .HasForeignKey(r => r.ProductId);
-
-        builder.Property(r => r.Rating)
-            .IsRequired();
-
-        builder.Property(r => r.Comment)
-            .HasMaxLength(1000)
-            .IsRequired(false);
     }
 }

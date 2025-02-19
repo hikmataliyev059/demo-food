@@ -404,85 +404,6 @@ namespace FoodStore.DAL.Migrations
                     b.ToTable("Coupons");
                 });
 
-            modelBuilder.Entity("FoodStore.Core.Entities.Payments.Order", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<DateTime>("CreatedTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("OrderStatus")
-                        .HasColumnType("int");
-
-                    b.Property<string>("PaymentIntentId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ReceiptEmail")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("UpdatedTime")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Orders");
-                });
-
-            modelBuilder.Entity("FoodStore.Core.Entities.Payments.Payment", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<DateTime>("CreatedTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("OrderId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("PaymentDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("PaymentMethod")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("UpdatedTime")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OrderId");
-
-                    b.ToTable("Payments");
-                });
-
             modelBuilder.Entity("FoodStore.Core.Entities.Products.Product", b =>
                 {
                     b.Property<int>("Id")
@@ -759,6 +680,12 @@ namespace FoodStore.DAL.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<string>("RefreshToken")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("RefreshTokenExpiration")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
@@ -782,7 +709,7 @@ namespace FoodStore.DAL.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("FoodStore.Core.Entities.Wishlists.Wishlist", b =>
+            modelBuilder.Entity("FoodStore.Core.Entities.Wish.Wishlist", b =>
                 {
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
@@ -1027,17 +954,6 @@ namespace FoodStore.DAL.Migrations
                     b.Navigation("Category");
                 });
 
-            modelBuilder.Entity("FoodStore.Core.Entities.Payments.Payment", b =>
-                {
-                    b.HasOne("FoodStore.Core.Entities.Payments.Order", "Order")
-                        .WithMany()
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Order");
-                });
-
             modelBuilder.Entity("FoodStore.Core.Entities.Products.Product", b =>
                 {
                     b.HasOne("FoodStore.Core.Entities.Categories.Category", "Category")
@@ -1096,7 +1012,7 @@ namespace FoodStore.DAL.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("FoodStore.Core.Entities.Wishlists.Wishlist", b =>
+            modelBuilder.Entity("FoodStore.Core.Entities.Wish.Wishlist", b =>
                 {
                     b.HasOne("FoodStore.Core.Entities.Products.Product", "Product")
                         .WithMany("Wishlists")

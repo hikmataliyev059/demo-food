@@ -1,6 +1,6 @@
 ﻿namespace FoodStore.BL.Helpers.DTOs.Contacts;
 
-public class ContactUpdateDto
+public record ContactUpdateDto
 {
     public string FullName { get; set; }
     public string Email { get; set; }

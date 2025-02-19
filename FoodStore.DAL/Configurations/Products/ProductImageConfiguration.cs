@@ -1,5 +1,4 @@
-﻿using FoodStore.Core.Entities;
-using FoodStore.Core.Entities.Products;
+﻿using FoodStore.Core.Entities.Products;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -11,10 +10,8 @@ public class ProductImageConfiguration : IEntityTypeConfiguration<ProductImage>
     {
         builder.HasKey(pi => pi.Id);
 
-        builder.Property(pi => pi.ImgUrl)
-            .IsRequired();
+        builder.Property(pi => pi.ImgUrl).IsRequired();
         
-        builder.Property(pi => pi.Primary)
-            .IsRequired();
+        builder.Property(pi => pi.Primary).IsRequired();
     }
 }

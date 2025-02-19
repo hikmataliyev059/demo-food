@@ -20,16 +20,16 @@ public static class Program
 
         builder.Services.AddBusinessServices();
         builder.Services.AddConfiguration(builder.Configuration);
+
         builder.Services.AddStripe(builder.Configuration);
         builder.Services.ConfigureMailServices(builder.Configuration);
         builder.Services.AddRepositories();
-
+        
         builder.Services.AddIdentityServices();
 
         builder.Services.GenerateJwtToken(builder.Configuration);
 
-        builder.Services.AddCors(options =>
-        {
+        builder.Services.AddCors(options => {
             options.AddPolicy("AllowAll", policy =>
             {
                 policy.AllowAnyOrigin()
@@ -41,6 +41,7 @@ public static class Program
         var app = builder.Build();
 
         app.UseSwagger();
+        
         app.UseSwaggerUI();
 
         app.ConfigureExceptionHandler();
@@ -50,15 +51,15 @@ public static class Program
         app.UseCors("AllowAll");
 
         app.UseSeedData();
-
-        app.UseStaticFiles();
-
+        
         app.UseRouting();
 
         app.UseAuthentication();
 
         app.UseAuthorization();
 
+        app.AddHangfireDashboard(builder.Configuration);
+        
         app.MapControllers();
 
         app.Run();

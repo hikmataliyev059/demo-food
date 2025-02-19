@@ -2,11 +2,32 @@
 using System.Text;
 using FluentValidation.AspNetCore;
 using FoodStore.BL.Helpers.Email;
-using FoodStore.BL.Services.Implements;
-using FoodStore.BL.Services.Interfaces;
+using FoodStore.BL.Services.Implements.Auth;
+using FoodStore.BL.Services.Implements.Blogs;
+using FoodStore.BL.Services.Implements.Cart;
+using FoodStore.BL.Services.Implements.Categories;
+using FoodStore.BL.Services.Implements.Contact;
+using FoodStore.BL.Services.Implements.Email;
+using FoodStore.BL.Services.Implements.File;
+using FoodStore.BL.Services.Implements.Products;
+using FoodStore.BL.Services.Implements.Stripe;
+using FoodStore.BL.Services.Implements.Wishlist;
+using FoodStore.BL.Services.Interfaces.Auth;
+using FoodStore.BL.Services.Interfaces.Blogs;
+using FoodStore.BL.Services.Interfaces.Cart;
+using FoodStore.BL.Services.Interfaces.Categories;
+using FoodStore.BL.Services.Interfaces.Contact;
+using FoodStore.BL.Services.Interfaces.Coupon;
+using FoodStore.BL.Services.Interfaces.Email;
+using FoodStore.BL.Services.Interfaces.File;
+using FoodStore.BL.Services.Interfaces.Products;
+using FoodStore.BL.Services.Interfaces.Review;
+using FoodStore.BL.Services.Interfaces.Wishlist;
 using FoodStore.Core.Entities.User;
 using FoodStore.Core.Enums;
 using FoodStore.DAL.Context;
+using Hangfire;
+using HangfireBasicAuthenticationFilter;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
@@ -16,9 +37,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Stripe;
-using CouponService = FoodStore.BL.Services.Implements.CouponService;
-using ProductService = FoodStore.BL.Services.Implements.ProductService;
-using ReviewService = FoodStore.BL.Services.Implements.ReviewService;
+using CouponService = FoodStore.BL.Services.Implements.Coupon.CouponService;
+using ProductService = FoodStore.BL.Services.Implements.Products.ProductService;
+using ReviewService = FoodStore.BL.Services.Implements.Review.ReviewService;
 
 namespace FoodStore.BL;
 
@@ -30,10 +51,8 @@ public static class BusinessRegister
         services.AddScoped<ICategoryService, CategoryService>();
         services.AddScoped<ISubCategoryService, SubCategoryService>();
         services.AddScoped<ITagService, TagService>();
-        services.AddScoped<IPaymentService, PaymentService>();
         services.AddScoped<IProductService, ProductService>();
         services.AddScoped<IUserService, UserService>();
-        services.AddScoped<IUploadFileService, UploadFileService>();
         services.AddScoped<IReviewService, ReviewService>();
         services.AddScoped<ICouponService, CouponService>();
         services.AddScoped<IContactService, ContactService>();
@@ -42,9 +61,31 @@ public static class BusinessRegister
         services.AddScoped<ICommentService, CommentService>();
         services.AddScoped<IWishlistService, WishlistService>();
         services.AddScoped<ICartService, CartService>();
+        services.AddScoped<IFileStorage, FileStorage>();
         services.AddControllers().AddFluentValidation(cfg =>
         {
             cfg.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+        });
+    }
+
+    public static void AddHangfireDashboard(this IApplicationBuilder app, IConfiguration configuration)
+    {
+        var adminSettings = configuration.GetSection("AdminSettings");
+
+        var adminUsername = adminSettings["Username"];
+        var adminPassword = adminSettings["Password"];
+
+        app.UseHangfireDashboard("/hangfire", new DashboardOptions
+        {
+            DisplayStorageConnectionString = false,
+            Authorization =
+            [
+                new HangfireCustomBasicAuthenticationFilter
+                {
+                    User = adminUsername,
+                    Pass = adminPassword
+                }
+            ]
         });
     }
 
@@ -53,6 +94,7 @@ public static class BusinessRegister
         var stripeSettings = configuration.GetSection("StripeSettings");
 
         StripeConfiguration.ApiKey = stripeSettings["SecretKey"];
+        services.AddScoped<StripeService>();
     }
 
     public static void AddIdentityServices(this IServiceCollection services)

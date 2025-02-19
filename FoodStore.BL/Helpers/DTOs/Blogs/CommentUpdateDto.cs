@@ -1,6 +1,6 @@
 ﻿namespace FoodStore.BL.Helpers.DTOs.Blogs;
 
-public class CommentUpdateDto
+public record CommentUpdateDto
 {
     public string Content { get; set; }  
     public string UserName { get; set; } 

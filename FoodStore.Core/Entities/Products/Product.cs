@@ -2,7 +2,7 @@
 using FoodStore.Core.Entities.Categories;
 using FoodStore.Core.Entities.Common;
 using FoodStore.Core.Entities.Reviews;
-using FoodStore.Core.Entities.Wishlists;
+using FoodStore.Core.Entities.Wish;
 
 namespace FoodStore.Core.Entities.Products;
 
