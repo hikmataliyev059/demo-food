@@ -10,8 +10,7 @@ using FoodStore.BL.Helpers.Exceptions.User;
 using FoodStore.BL.Services.Interfaces.Auth;
 using FoodStore.BL.Services.Interfaces.Email;
 using FoodStore.Core.Entities.User;
-using FoodStore.Core.Enums;
-using Hangfire;
+using FoodStore.Core.Enums.Users;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -72,8 +71,6 @@ public class UserService : IUserService
             Subject = "Confirm Email",
             Body = $"<h1>Your confirmation code: <br>{confirmKey}</h1><a href='{link}'>Confirm Email<a/>"
         }));
-
-        BackgroundJob.Schedule(() => DeleteUnconfirmedUsers(), TimeSpan.FromDays(1));
     }
 
     public async Task DeleteUnconfirmedUsers()
@@ -113,7 +110,6 @@ public class UserService : IUserService
         user.ConfirmKey = null;
         user.ConfirmKeyExpiration = null;
 
-        // await DeleteUnconfirmedUsers();
         await _userManager.UpdateAsync(user);
 
         return "Email verified!";
@@ -139,7 +135,7 @@ public class UserService : IUserService
 
         var link = $"{_configuration["BaseUrl"]}/submit-registration?email={user.Email}&token={token}";
 
-        MailRequest mailRequest = new MailRequest()
+        MailRequest mailRequest = new MailRequest
         {
             ToEmail = user.Email,
             Subject = "Confirm Email",
@@ -155,7 +151,7 @@ public class UserService : IUserService
         if (user == null) throw new UserForgotException();
 
         var token = await _userManager.GeneratePasswordResetTokenAsync(user);
-        var link = $"{_configuration["BaseUrl"]}/reset-password?email={forgotPasswordDto.Email}&token={token}";
+        var link = $"https://localhost:7014/auth/reset-password?email={forgotPasswordDto.Email}&token={token}";
 
         MailRequest mailRequest = new MailRequest
         {
@@ -193,10 +189,9 @@ public class UserService : IUserService
 
         if (user == null) throw new UserLoginFaildException();
 
-        if (await _userManager.IsLockedOutAsync(user))
-        {
-            throw new UserLockedOutException();
-        }
+        if (!user.EmailConfirmed) throw new UserRegisterException("Please confirm your email first");
+
+        if (await _userManager.IsLockedOutAsync(user)) throw new UserLockedOutException();
 
         var result = await _userManager.CheckPasswordAsync(user, loginDto.Password);
 

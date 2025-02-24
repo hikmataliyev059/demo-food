@@ -7,6 +7,7 @@ using FoodStore.BL.Services.Interfaces.File;
 using FoodStore.BL.Services.Interfaces.Products;
 using FoodStore.Core.Entities.Products;
 using FoodStore.Core.Enums;
+using FoodStore.Core.Enums.AzureContainer;
 using FoodStore.Core.Repositories.Interfaces.Products;
 using Microsoft.EntityFrameworkCore;
 
@@ -156,7 +157,7 @@ public class ProductService : IProductService
 
         var existingProduct = await _productRepository.GetByIdAsync(id);
         if (existingProduct == null) throw new NotFoundException<Product>();
-        
+
         foreach (var image in existingProduct.ProductImages)
         {
             await _fileStorage.DeleteFileAsync(image.ImgUrl, StorageContainer.Product);
@@ -166,22 +167,29 @@ public class ProductService : IProductService
         await _productRepository.SaveChangesAsync();
     }
 
-    public async Task<bool> UpdateStockAsync(int productId, int quantity)
+    public async Task<bool> IncreaseStockAsync(int productId, int quantity)
     {
         var product = await _productRepository.GetByIdAsync(productId);
-        if (product == null) return false;
-        product.Slug = SlugHelper.CreateSlug(product.Name);
+        if (product == null) throw new NotFoundException<Product>();
 
-        if (product.StockQuantity >= quantity)
-        {
-            product.StockQuantity -= quantity;
-            product.UpdatedTime = DateTime.UtcNow;
-            await _productRepository.Update(product);
-            await _productRepository.SaveChangesAsync();
-            return true;
-        }
+        product.StockQuantity += quantity;
+        product.UpdatedTime = DateTime.UtcNow;
+        await _productRepository.Update(product);
+        await _productRepository.SaveChangesAsync();
+        return true;
+    }
 
-        return false;
+    public async Task<bool> DecreaseStockAsync(int productId, int quantity)
+    {
+        var product = await _productRepository.GetByIdAsync(productId);
+        if (product == null) throw new NotFoundException<Product>();
+
+        if (product.StockQuantity < quantity) return false;
+        product.StockQuantity -= quantity;
+        product.UpdatedTime = DateTime.UtcNow;
+        await _productRepository.Update(product);
+        await _productRepository.SaveChangesAsync();
+        return true;
     }
 
     public async Task<IEnumerable<ProductGetDto>> GetProductsByCategoryAsync(int categoryId)

@@ -2,11 +2,12 @@
 using FoodStore.BL.Helpers.DTOs.Contacts;
 using FoodStore.BL.Helpers.Email;
 using FoodStore.BL.Helpers.Exceptions.Common;
-using FoodStore.BL.Services.Interfaces.Contact;
+using FoodStore.BL.Services.Interfaces.Contacts;
 using FoodStore.BL.Services.Interfaces.Email;
+using FoodStore.Core.Entities.Contacts;
 using FoodStore.Core.Repositories.Interfaces.Contacts;
 
-namespace FoodStore.BL.Services.Implements.Contact;
+namespace FoodStore.BL.Services.Implements.Contacts;
 
 public class ContactService : IContactService
 {
@@ -26,14 +27,14 @@ public class ContactService : IContactService
         if (id <= 0) throw new NegativeIdException();
 
         var contact = await _contactRepository.GetByIdAsync(id);
-        if (contact == null) throw new NotFoundException<Core.Entities.Contacts.Contact>();
+        if (contact == null) throw new NotFoundException<Contact>();
 
         return _mapper.Map<ContactDto>(contact);
     }
 
     public async Task<ContactDto> CreateContactAsync(ContactDto createContactDto)
     {
-        var contact = _mapper.Map<Core.Entities.Contacts.Contact>(createContactDto);
+        var contact = _mapper.Map<Contact>(createContactDto);
         var addedContact = await _contactRepository.AddAsync(contact);
         await _contactRepository.SaveChangesAsync();
 
@@ -72,7 +73,7 @@ public class ContactService : IContactService
         if (id <= 0) throw new NegativeIdException();
 
         var contact = await _contactRepository.GetByIdAsync(id);
-        if (contact == null) throw new NotFoundException<Core.Entities.Contacts.Contact>();
+        if (contact == null) throw new NotFoundException<Contact>();
 
         _mapper.Map(contactUpdateDto, contact);
         await _contactRepository.Update(contact);
@@ -85,7 +86,7 @@ public class ContactService : IContactService
         if (id <= 0) throw new NegativeIdException();
 
         var contact = await _contactRepository.GetByIdAsync(id);
-        if (contact == null) throw new NotFoundException<Core.Entities.Contacts.Contact>();
+        if (contact == null) throw new NotFoundException<Contact>();
 
         await _contactRepository.Delete(contact);
         await _contactRepository.SaveChangesAsync();

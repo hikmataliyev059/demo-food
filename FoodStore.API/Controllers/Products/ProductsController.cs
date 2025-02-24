@@ -83,11 +83,20 @@ public class ProductsController : ControllerBase
         return Ok(products);
     }
 
-    [HttpPost("update-stock/")]
-    public async Task<IActionResult> UpdateStock([FromForm] int productId, int quantity)
+    [HttpPost("increase-stock/")]
+    [AllowAnonymous]
+    public async Task<IActionResult> IncreaseStock([FromForm] int productId, int quantity)
     {
-        await _productService.UpdateStockAsync(productId, quantity);
-        return Ok("Stock updated");
+        await _productService.IncreaseStockAsync(productId, quantity);
+        return Ok("Stock increased");
+    }
+
+    [HttpPost("decrease-stock/")]
+    [AllowAnonymous]
+    public async Task<IActionResult> DecreaseStock([FromForm] int productId, int quantity)
+    {
+        await _productService.DecreaseStockAsync(productId, quantity);
+        return Ok("Stock decreased");
     }
 
     [HttpGet("{id}/edit")]

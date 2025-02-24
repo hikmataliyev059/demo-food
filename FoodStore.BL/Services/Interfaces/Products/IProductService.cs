@@ -16,7 +16,9 @@ public interface IProductService
 
     Task SoftDeleteAsync(int id);
 
-    Task<bool> UpdateStockAsync(int productId, int quantity);
+    Task<bool> IncreaseStockAsync(int productId, int quantity);
+
+    Task<bool> DecreaseStockAsync(int productId, int quantity);
 
     Task<IEnumerable<ProductGetDto>> GetProductsByCategoryAsync(int categoryId);
 

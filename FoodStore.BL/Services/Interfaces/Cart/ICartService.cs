@@ -1,4 +1,4 @@
-﻿using FoodStore.BL.Helpers.DTOs.Product;
+﻿using FoodStore.BL.Helpers.DTOs.Carts;
 
 namespace FoodStore.BL.Services.Interfaces.Cart;
 
@@ -6,7 +6,7 @@ public interface ICartService
 {
     Task AddToCartAsync(int productId, string userId, int quantity);
     
-    Task<IEnumerable<ProductGetDto>> GetCartAsync(string userId);
+    Task<IEnumerable<CartGetDto>> GetCartAsync(string userId);
     
     Task UpdateCartAsync(int productId, string userId, int quantity);
     

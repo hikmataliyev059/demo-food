@@ -8,15 +8,9 @@ public class SubmitRegistrationDtoValidator : AbstractValidator<SubmitRegistrati
 {
     public SubmitRegistrationDtoValidator()
     {
-        RuleFor(x => x.Email)
-            .NotEmpty()
-            .NotNull()
-            .WithMessage(ValidationMessages.Required)
+        RuleFor(x => x.Email).NotEmpty().NotNull().WithMessage(ValidationMessages.Required)
             .EmailAddress().WithMessage(ValidationMessages.InvalidEmail);
 
-        RuleFor(x => x.ConfirmKey)
-            .NotNull()
-            .NotEmpty()
-            .WithMessage(ValidationMessages.Required);
+        RuleFor(x => x.ConfirmKey).NotNull().NotEmpty().WithMessage(ValidationMessages.Required);
     }
 }

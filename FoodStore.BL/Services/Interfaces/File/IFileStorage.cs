@@ -1,4 +1,4 @@
-﻿using FoodStore.Core.Enums;
+﻿using FoodStore.Core.Enums.AzureContainer;
 using Microsoft.AspNetCore.Http;
 
 namespace FoodStore.BL.Services.Interfaces.File;

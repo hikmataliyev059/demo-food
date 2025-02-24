@@ -1,9 +1,9 @@
 using FoodStore.BL.Helpers.DTOs.Coupon;
-using FoodStore.BL.Services.Interfaces.Coupon;
+using FoodStore.BL.Services.Interfaces.Coupons;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace FoodStore.API.Controllers.Coupon;
+namespace FoodStore.API.Controllers.Coupons;
 
 [Route("api/[controller]")]
 [ApiController]
@@ -25,7 +25,7 @@ public class CouponController : ControllerBase
     }
 
     [HttpPost("add")]
-    public async Task<IActionResult> AddCoupon([FromBody] CouponDto couponDto)
+    public async Task<IActionResult> AddCoupon([FromForm] CouponDto couponDto)
     {
         await _couponService.AddCouponAsync(couponDto);
         return Ok(new { message = "Coupon successfully added." });

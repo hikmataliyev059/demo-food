@@ -33,6 +33,13 @@ public static class DalServiceRegister
 
         services.AddHangfire(x => x.UseSqlServerStorage(configuration.GetConnectionString("Deploy")));
         services.AddHangfireServer();
+
+        var googleCloudCredentialsPath = configuration["GoogleCloud:CredentialsPath"];
+
+        if (!string.IsNullOrEmpty(googleCloudCredentialsPath))
+        {
+            Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", googleCloudCredentialsPath);
+        }
     }
 
     public static void AddRepositories(this IServiceCollection services)

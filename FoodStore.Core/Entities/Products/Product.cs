@@ -15,7 +15,7 @@ public class Product : BaseEntity
     public string SKU { get; set; }
     public int StockQuantity { get; set; }
     public decimal Discount { get; set; }
-    public decimal DiscountedPrice => Discount > 0 ? Price - (Price * Discount / 100) : Price;
+    public decimal DiscountedPrice => Discount > 0 ? Price - Price * Discount / 100 : Price;
     public int CategoryId { get; set; }
     public Category Category { get; set; }
     public int? SubCategoryId { get; set; }

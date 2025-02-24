@@ -1,6 +1,6 @@
 ﻿using FoodStore.BL.Helpers.DTOs.Coupon;
 
-namespace FoodStore.BL.Services.Interfaces.Coupon;
+namespace FoodStore.BL.Services.Interfaces.Coupons;
 
 public interface ICouponService
 {

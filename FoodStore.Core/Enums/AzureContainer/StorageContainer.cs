@@ -1,4 +1,4 @@
-﻿namespace FoodStore.Core.Enums;
+﻿namespace FoodStore.Core.Enums.AzureContainer;
 
 public enum StorageContainer
 {

@@ -5,6 +5,7 @@ using FoodStore.BL.Services.Interfaces.Blogs;
 using FoodStore.BL.Services.Interfaces.File;
 using FoodStore.Core.Entities.Blogs;
 using FoodStore.Core.Enums;
+using FoodStore.Core.Enums.AzureContainer;
 using FoodStore.Core.Repositories.Interfaces.Blogs;
 
 namespace FoodStore.BL.Services.Implements.Blogs;

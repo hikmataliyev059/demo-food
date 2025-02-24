@@ -1,5 +1,5 @@
 using FoodStore.BL.Helpers.DTOs.Review;
-using FoodStore.BL.Services.Interfaces.Review;
+using FoodStore.BL.Services.Interfaces.Reviews;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

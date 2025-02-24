@@ -18,7 +18,7 @@ public class FoodStoreDbContext : IdentityDbContext<AppUser>
     public FoodStoreDbContext(DbContextOptions<FoodStoreDbContext> options) : base(options)
     {
     }
-
+    
     public DbSet<Category> Categories { get; set; }
 
     public DbSet<Product> Products { get; set; }
@@ -48,7 +48,7 @@ public class FoodStoreDbContext : IdentityDbContext<AppUser>
     public DbSet<Wishlist> Wishlists { get; set; }
 
     public DbSet<Contact> Contacts { get; set; }
-
+    
     protected override void OnModelCreating(ModelBuilder builder)
     {
         builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());

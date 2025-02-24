@@ -1,6 +1,6 @@
 ﻿using FoodStore.BL.Helpers.DTOs.Product;
 
-namespace FoodStore.BL.Services.Interfaces.Wishlist;
+namespace FoodStore.BL.Services.Interfaces.Wishlists;
 
 public interface IWishlistService
 {

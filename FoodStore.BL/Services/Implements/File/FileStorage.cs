@@ -2,6 +2,7 @@
 using Azure.Storage.Blobs.Models;
 using FoodStore.BL.Services.Interfaces.File;
 using FoodStore.Core.Enums;
+using FoodStore.Core.Enums.AzureContainer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 

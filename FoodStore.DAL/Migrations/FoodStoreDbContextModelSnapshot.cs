@@ -269,7 +269,7 @@ namespace FoodStore.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("FoodStore.Core.Entities.Categories.SubCategory", b =>
@@ -401,7 +401,7 @@ namespace FoodStore.DAL.Migrations
                     b.HasIndex("Code")
                         .IsUnique();
 
-                    b.ToTable("Coupons");
+                    b.ToTable("Coupons", (string)null);
                 });
 
             modelBuilder.Entity("FoodStore.Core.Entities.Products.Product", b =>
@@ -466,7 +466,7 @@ namespace FoodStore.DAL.Migrations
 
                     b.HasIndex("SubCategoryId");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("FoodStore.Core.Entities.Products.ProductImage", b =>
@@ -503,7 +503,7 @@ namespace FoodStore.DAL.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductImages");
+                    b.ToTable("ProductImages", (string)null);
                 });
 
             modelBuilder.Entity("FoodStore.Core.Entities.Products.Tag", b =>
@@ -539,7 +539,7 @@ namespace FoodStore.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Tags");
+                    b.ToTable("Tags", (string)null);
                 });
 
             modelBuilder.Entity("FoodStore.Core.Entities.Products.TagProduct", b =>
@@ -574,7 +574,7 @@ namespace FoodStore.DAL.Migrations
 
                     b.HasIndex("TagId");
 
-                    b.ToTable("TagProducts");
+                    b.ToTable("TagProducts", (string)null);
                 });
 
             modelBuilder.Entity("FoodStore.Core.Entities.Reviews.Review", b =>

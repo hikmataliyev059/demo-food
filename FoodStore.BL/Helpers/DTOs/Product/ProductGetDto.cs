@@ -15,8 +15,8 @@ public record ProductGetDto
     public string CategoryName { get; set; }
     public int? SubCategoryId { get; set; }
     public string SubCategoryName { get; set; }
-    public List<int> TagIds { get; set; } = new List<int>();
-    public List<string> TagNames { get; set; } = new List<string>();
+    public List<int> TagIds { get; set; } = [];
+    public List<string> TagNames { get; set; } = [];
     public string PrimaryImageUrl { get; set; } = string.Empty;
-    public List<string> SubImageUrls { get; set; } = new List<string>();
+    public List<string> SubImageUrls { get; set; } = [];
 }

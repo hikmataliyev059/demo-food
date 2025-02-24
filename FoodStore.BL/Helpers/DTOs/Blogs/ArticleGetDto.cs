@@ -7,8 +7,8 @@ public record ArticleGetDto
     public string Content { get; set; }
     public string ImageUrl { get; set; }
     public string PublishDate { get; set; }
-    public List<int> TagIds { get; set; } = new List<int>();
-    public List<string> TagNames { get; set; } = new List<string>();
+    public List<int> TagIds { get; set; } = [];
+    public List<string> TagNames { get; set; } = [];
     public int CategoryId { get; set; }
     public string CategoryName { get; set; }
     public int AuthorId { get; set; }

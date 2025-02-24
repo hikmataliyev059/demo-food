@@ -8,10 +8,7 @@ public class ForgetPasswordDtoValidator : AbstractValidator<ForgetPasswordDto>
 {
     public ForgetPasswordDtoValidator()
     {
-        RuleFor(x => x.Email)
-            .NotEmpty()
-            .NotNull()
-            .WithMessage(ValidationMessages.Required)
+        RuleFor(x => x.Email).NotEmpty().NotNull().WithMessage(ValidationMessages.Required)
             .MinimumLength(3).WithMessage(ValidationMessages.MinLength)
             .EmailAddress().WithMessage(ValidationMessages.InvalidEmail);
     }

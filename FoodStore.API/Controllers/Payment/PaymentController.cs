@@ -1,5 +1,5 @@
 using FoodStore.BL.Helpers.DTOs.Payment;
-using FoodStore.BL.Services.Implements.Stripe;
+using FoodStore.BL.Services.Implements.Payments;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FoodStore.API.Controllers.Payment;
@@ -18,14 +18,7 @@ public class PaymentController : ControllerBase
     [HttpPost("payment")]
     public async Task<IActionResult> CreatePayment([FromBody] PaymentDto paymentDto)
     {
-        var paymentIntent = await _stripeService.CreatePaymentIntent(paymentDto.Amount, "usd", paymentDto.Token);
+        var paymentIntent = await _stripeService.CreatePaymentIntent(paymentDto);
         return Ok(new { clientSecret = paymentIntent.ClientSecret });
-    }
-
-    [HttpPost("confirm-payment")]
-    public async Task<IActionResult> ConfirmPayment([FromBody] string paymentIntentId)
-    {
-        var paymentIntent = await _stripeService.ConfirmPaymentIntent(paymentIntentId);
-        return Ok(paymentIntent);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FoodStore.BL.Helpers.Constants;
+using FoodStore.BL.Helpers.DTOs.Carts;
 using FoodStore.BL.Helpers.DTOs.Product;
 using FoodStore.BL.Helpers.Exceptions.Common;
 using FoodStore.BL.Helpers.Exceptions.User;
@@ -60,20 +61,24 @@ public class CartService : ICartService
         await _cartRepository.SaveChangesAsync();
     }
 
-    public async Task<IEnumerable<ProductGetDto>> GetCartAsync(string userId)
+    public async Task<IEnumerable<CartGetDto>> GetCartAsync(string userId)
     {
         var product = await _productRepository
             .GetAll(QueryIncludes.Category, QueryIncludes.SubCategory, QueryIncludes.ProductImages,
                 QueryIncludes.TagProducts).ToListAsync();
         if (product == null) throw new NotFoundException<Product>();
+
         var cartItems = await _cartRepository.GetWhere(c => c.UserId == userId)
             .Include(c => c.Product)
             .ToListAsync();
 
-        return _mapper.Map<IEnumerable<ProductGetDto>>(cartItems.Select(c => c.Product));
+        return cartItems.Select(c => new CartGetDto
+        {
+            Product = _mapper.Map<ProductGetDto>(c.Product),
+            Quantity = c.Quantity
+        });
     }
-
-
+    
     public async Task UpdateCartAsync(int productId, string userId, int quantity)
     {
         var cartItem = await _cartRepository.GetWhere(c => c.UserId == userId && c.ProductId == productId)
@@ -95,10 +100,7 @@ public class CartService : ICartService
         var cartItem = await _cartRepository.GetWhere(c => c.UserId == userId && c.ProductId == productId)
             .FirstOrDefaultAsync();
 
-        if (cartItem == null)
-        {
-            throw new NotFoundException<CartItem>();
-        }
+        if (cartItem == null) throw new NotFoundException<CartItem>();
 
         await _cartRepository.Delete(cartItem);
         await _cartRepository.SaveChangesAsync();

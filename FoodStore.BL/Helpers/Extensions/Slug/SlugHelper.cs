@@ -16,8 +16,8 @@ public static class SlugHelper
 
     private static string RemoveTurkishCharacters(string input)
     {
-        string[] turkishChars = { "ç", "ı", "ğ", "ü", "ş", "ö" };
-        string[] englishChars = { "c", "i", "g", "u", "s", "o" };
+        string[] turkishChars = ["ç", "ı", "ğ", "ü", "ş", "ö"];
+        string[] englishChars = ["c", "i", "g", "u", "s", "o"];
 
         for (int i = 0; i < turkishChars.Length; i++)
         {

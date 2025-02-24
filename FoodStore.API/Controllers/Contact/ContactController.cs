@@ -1,5 +1,5 @@
 using FoodStore.BL.Helpers.DTOs.Contacts;
-using FoodStore.BL.Services.Interfaces.Contact;
+using FoodStore.BL.Services.Interfaces.Contacts;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FoodStore.API.Controllers.Contact;

@@ -2,29 +2,32 @@
 using System.Text;
 using FluentValidation.AspNetCore;
 using FoodStore.BL.Helpers.Email;
+using FoodStore.BL.Services.Implements;
 using FoodStore.BL.Services.Implements.Auth;
 using FoodStore.BL.Services.Implements.Blogs;
 using FoodStore.BL.Services.Implements.Cart;
 using FoodStore.BL.Services.Implements.Categories;
-using FoodStore.BL.Services.Implements.Contact;
+using FoodStore.BL.Services.Implements.ChatBot;
+using FoodStore.BL.Services.Implements.Contacts;
 using FoodStore.BL.Services.Implements.Email;
 using FoodStore.BL.Services.Implements.File;
+using FoodStore.BL.Services.Implements.Payments;
 using FoodStore.BL.Services.Implements.Products;
-using FoodStore.BL.Services.Implements.Stripe;
-using FoodStore.BL.Services.Implements.Wishlist;
+using FoodStore.BL.Services.Implements.Wishlists;
 using FoodStore.BL.Services.Interfaces.Auth;
 using FoodStore.BL.Services.Interfaces.Blogs;
 using FoodStore.BL.Services.Interfaces.Cart;
 using FoodStore.BL.Services.Interfaces.Categories;
-using FoodStore.BL.Services.Interfaces.Contact;
-using FoodStore.BL.Services.Interfaces.Coupon;
+using FoodStore.BL.Services.Interfaces.Contacts;
+using FoodStore.BL.Services.Interfaces.Coupons;
 using FoodStore.BL.Services.Interfaces.Email;
 using FoodStore.BL.Services.Interfaces.File;
 using FoodStore.BL.Services.Interfaces.Products;
-using FoodStore.BL.Services.Interfaces.Review;
-using FoodStore.BL.Services.Interfaces.Wishlist;
+using FoodStore.BL.Services.Interfaces.Reviews;
+using FoodStore.BL.Services.Interfaces.Wishlists;
+using FoodStore.Core.Entities.Payments;
 using FoodStore.Core.Entities.User;
-using FoodStore.Core.Enums;
+using FoodStore.Core.Enums.Users;
 using FoodStore.DAL.Context;
 using Hangfire;
 using HangfireBasicAuthenticationFilter;
@@ -37,9 +40,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Stripe;
-using CouponService = FoodStore.BL.Services.Implements.Coupon.CouponService;
+using CouponService = FoodStore.BL.Services.Implements.Coupons.CouponService;
 using ProductService = FoodStore.BL.Services.Implements.Products.ProductService;
-using ReviewService = FoodStore.BL.Services.Implements.Review.ReviewService;
+using ReviewService = FoodStore.BL.Services.Implements.Reviews.ReviewService;
 
 namespace FoodStore.BL;
 
@@ -62,6 +65,7 @@ public static class BusinessRegister
         services.AddScoped<IWishlistService, WishlistService>();
         services.AddScoped<ICartService, CartService>();
         services.AddScoped<IFileStorage, FileStorage>();
+        services.AddScoped<DialogflowService>();
         services.AddControllers().AddFluentValidation(cfg =>
         {
             cfg.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly());
@@ -89,11 +93,17 @@ public static class BusinessRegister
         });
     }
 
+    public static void AddRecurringJobs(this IApplicationBuilder app)
+    {
+        RecurringJob.AddOrUpdate<UserService>(user => user.DeleteUnconfirmedUsers(), "59 23 * * *");
+    }
+
     public static void AddStripe(this IServiceCollection services, IConfiguration configuration)
     {
         var stripeSettings = configuration.GetSection("StripeSettings");
-
         StripeConfiguration.ApiKey = stripeSettings["SecretKey"];
+
+        services.Configure<StripeSettings>(configuration.GetSection("StripeSettings"));
         services.AddScoped<StripeService>();
     }
 
@@ -166,7 +176,7 @@ public static class BusinessRegister
                         Name = "JWT",
                         In = ParameterLocation.Header,
                     },
-                    new string[] { }
+                    []
                 }
             });
         });

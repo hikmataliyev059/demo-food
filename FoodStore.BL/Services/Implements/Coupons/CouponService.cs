@@ -1,11 +1,12 @@
 ﻿using AutoMapper;
 using FoodStore.BL.Helpers.DTOs.Coupon;
 using FoodStore.BL.Helpers.Exceptions.Coupon;
-using FoodStore.BL.Services.Interfaces.Coupon;
+using FoodStore.BL.Services.Interfaces.Coupons;
+using FoodStore.Core.Entities.Coupons;
 using FoodStore.Core.Repositories.Interfaces.Coupons;
 using Microsoft.EntityFrameworkCore;
 
-namespace FoodStore.BL.Services.Implements.Coupon;
+namespace FoodStore.BL.Services.Implements.Coupons;
 
 public class CouponService : ICouponService
 {
@@ -46,7 +47,7 @@ public class CouponService : ICouponService
 
     public async Task AddCouponAsync(CouponDto couponDto)
     {
-        var coupon = _mapper.Map<Core.Entities.Coupons.Coupon>(couponDto);
+        var coupon = _mapper.Map<Coupon>(couponDto);
 
         await _couponRepository.AddAsync(coupon);
         await _couponRepository.SaveChangesAsync();
@@ -75,7 +76,7 @@ public class CouponService : ICouponService
     {
         var coupons = await _couponRepository.GetAll().ToListAsync();
         if (coupons == null) throw new CouponNotFoundException();
-            
+
         var couponsDto = _mapper.Map<IEnumerable<CouponDto>>(coupons);
         return couponsDto;
     }

@@ -3,12 +3,13 @@ using FoodStore.BL.Helpers.DTOs.Review;
 using FoodStore.BL.Helpers.Email;
 using FoodStore.BL.Helpers.Exceptions.Common;
 using FoodStore.BL.Services.Interfaces.Email;
-using FoodStore.BL.Services.Interfaces.Review;
+using FoodStore.BL.Services.Interfaces.Reviews;
 using FoodStore.Core.Entities.Products;
+using FoodStore.Core.Entities.Reviews;
 using FoodStore.Core.Repositories.Interfaces.Products;
 using FoodStore.Core.Repositories.Interfaces.Reviews;
 
-namespace FoodStore.BL.Services.Implements.Review;
+namespace FoodStore.BL.Services.Implements.Reviews;
 
 public class ReviewService : IReviewService
 {
@@ -35,7 +36,7 @@ public class ReviewService : IReviewService
             throw new NotFoundException<Product>();
         }
 
-        var review = _mapper.Map<Core.Entities.Reviews.Review>(reviewDto);
+        var review = _mapper.Map<Review>(reviewDto);
 
         await _reviewRepository.AddAsync(review);
         await _reviewRepository.SaveChangesAsync();

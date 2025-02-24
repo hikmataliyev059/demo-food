@@ -7,6 +7,7 @@ using FoodStore.Core.Entities.Blogs;
 using FoodStore.Core.Entities.Categories;
 using FoodStore.Core.Entities.Products;
 using FoodStore.Core.Enums;
+using FoodStore.Core.Enums.AzureContainer;
 using FoodStore.Core.Repositories.Interfaces.Blogs;
 using FoodStore.Core.Repositories.Interfaces.Categories;
 using FoodStore.Core.Repositories.Interfaces.Products;
